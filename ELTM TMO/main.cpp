@@ -6,13 +6,23 @@
 
 
 
-int main() {
+int main(int argc, const char *argv[]) {
 	int width, height, depth, precision;
 	bool pfm, big_endian;
 	double gamma = 2.2;
 
-	const char* input_file = "Images\\belgium.pfm"; 
-	const char* output_file = "Images\\belgium.ppm"; 
+	if (argc != 3)
+	{
+		std::cout << "Invalid args ";
+		for (int i = 1; i < argc; ++i)
+			std::cout << argv[i] << ' ';
+		std::cout << std::endl;
+		std::cout << "Usage: " << argv[0] << " INPUT OUTPUT" << std::endl;
+		return -1;
+	}
+
+	const char* input_file = argv[1];
+	const char* output_file = argv[2];
 
 	
 	//Read HDR Image
