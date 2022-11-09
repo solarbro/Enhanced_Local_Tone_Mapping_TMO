@@ -21,9 +21,15 @@ This repository contains the implimentation of Enhanced Local Tone Mapping (ELTM
 Follow the steps below to run the code.
 
 - First download the repository in your favourite folder.
-- In the folder just open the solution file named "ELTM TMO.sln" in Visual Studio.
-- Open the "main.cpp" file and run the code from there.
-- Adjust the images path as you want in "main.cpp" file.
+- Use the following commands to build:
+```
+mkdir build_cmake
+cd build_cmake
+cmake ..
+cmake --build .
+```
+- Run using ```ELTM-TMO.exe path/to/input path/to/output```
+- Use image2pnm.py to convert various image formats to the supported PFM format
 
 ### 5. Result
 
