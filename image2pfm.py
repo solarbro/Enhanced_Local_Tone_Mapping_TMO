@@ -43,9 +43,10 @@ def load_image(input):
 def main(input, output):
 	img = load_image(input)
 	img = np.clip(img, 0., 1.)
-	img = (img * 65535).astype(np.uint16)
-	# Image.fromarray(img).save(output)
-	# imageio.plugins.pnm.download()
+	# img = (img * 65535).astype(np.uint16)
+	out_path = os.path.splitext(output)
+	if out_path[-1] != '.pfm':
+		output = out_path[0] + '.pfm'
 	imageio.imsave(output, img)
 
 if __name__=='__main__':
