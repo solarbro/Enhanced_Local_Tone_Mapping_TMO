@@ -5,8 +5,7 @@
 #include <algorithm> 
 #include <numeric>
 #include <iostream>
-//#include"constant.h"
-
+#include <math.h>
 
 void eltm_tmo(FILE* in, int w, int h, int count, int depth, MEMORY* image_buffer, double gamma,
 	bool flt, bool bigendian, const ELTM_Params& params)

@@ -3,7 +3,7 @@ dependencies:
   - python==3.9
   - pip
   - pip:
-    - PyQt5
+    - PyQt6
     - imageio
     - rawpy
     - numpy

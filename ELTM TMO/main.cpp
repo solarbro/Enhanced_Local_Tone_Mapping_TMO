@@ -4,6 +4,9 @@
 #include"constant.h"
 #include"functions.h"
 
+#include <string.h>
+#include <limits>
+
 #define ARG_EPSILON   "-eps"
 #define ARG_RS        "-rs"
 #define ARG_EPSILON_S "-eps-s"

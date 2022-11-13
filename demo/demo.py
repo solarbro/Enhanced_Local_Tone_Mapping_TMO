@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-import os, subprocess, math
+from PyQt6.QtCore import *
+from PyQt6.QtWidgets import *
+from PyQt6.QtGui import *
+import os, subprocess, math, sys
 import urllib.request
 import numpy as np
 import cv2
@@ -22,7 +22,10 @@ class EltmTmo:
         subprocess.check_call(['cmake', '-DCMAKE_BUILD_TYPE=Release', '..'])
         subprocess.check_call(['cmake', '--build', '.', '--config', 'Release'])
         os.chdir(wd)
-        self.bin_path = os.path.join('..', 'build_cmake', 'Release', 'ELTM-TMO.exe')
+        if sys.platform=='win32':
+            self.bin_path = os.path.join('..', 'build_cmake', 'Release', 'ELTM-TMO.exe')
+        elif sys.platform=='linux':
+            self.bin_path = os.path.join('..', 'build_cmake', 'ELTM-TMO')
         assert os.path.exists(self.bin_path)
         self.cache_dir = 'pfm_cache'
         os.makedirs(self.cache_dir, exist_ok=True)
@@ -77,7 +80,7 @@ def npimage_to_qpixmap(img):
     img_8bit = (img * 255).astype(np.uint8)
     height, width, channel = img_8bit.shape
     bytes_per_line = channel * width
-    return QPixmap(QImage(img_8bit.data, width, height, bytes_per_line, QImage.Format_RGB888))
+    return QPixmap(QImage(img_8bit.data, width, height, bytes_per_line, QImage.Format.Format_RGB888))
 
 def downsize_preview(img, max_dim=640):
     # Resize image preview for performance
@@ -142,7 +145,7 @@ class Slider(QWidget):
         self.description = QLabel()
         self.description.setText(description)
         self.slider = QSlider()
-        self.slider.setOrientation(Qt.Horizontal)
+        self.slider.setOrientation(Qt.Orientation.Horizontal)
         self.slider.setRange(min, max)
         self.slider.setValue(value)
         l = QHBoxLayout()
@@ -337,8 +340,8 @@ class MainWindow(QWidget):
         img_name = self.hdrplus.get_name(self.img_index)
         hdrplus_imgs = self.hdrplus.get_image_by_index(self.img_index)
         self.current_image = hdrplus_imgs[0]
-        self.img_src = npimage_to_qpixmap(hdrplus_imgs[0]).scaled(QSize(320,240), Qt.KeepAspectRatio) 
-        self.img_dest = npimage_to_qpixmap(hdrplus_imgs[1]).scaled(QSize(320,240), Qt.KeepAspectRatio)
+        self.img_src = npimage_to_qpixmap(hdrplus_imgs[0]).scaled(QSize(320,240), Qt.AspectRatioMode.KeepAspectRatio) 
+        self.img_dest = npimage_to_qpixmap(hdrplus_imgs[1]).scaled(QSize(320,240), Qt.AspectRatioMode.KeepAspectRatio)
         self.img_eltm = npimage_to_qpixmap(self.process_eltm(self.current_image, img_name))
         self.label_src.setPixmap(self.img_src)
         self.label_dest.setPixmap(self.img_dest)
